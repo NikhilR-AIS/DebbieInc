@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debbie Inc – Spend Intelligence System Flow</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+        
+        .slide {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 50px;
+            width: 100%;
+        }
+        
+        .title {
+            font-size: 2.8rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            color: #7f8c8d;
+            margin-bottom: 50px;
+            font-weight: 300;
+        }
+        
+        .diagram-wrapper {
+            position: relative;
+            width: 100%;
+            min-height: 650px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 40px 20px;
+            overflow-x: auto;
+        }
+        
+        .flow-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            max-width: 1500px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .flow-box {
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .flow-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+        }
+        
+        .box-label {
+            font-weight: 700;
+            font-size: 1.05rem;
+            margin-bottom: 8px;
+            color: inherit;
+        }
+        
+        .box-description {
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: inherit;
+        }
+        
+        /* Color schemes */
+        .orange { 
+            background: linear-gradient(135deg, #FFA07A 0%, #FFE5CC 100%); 
+            border-left: 5px solid #FF8C69; 
+            color: #333;
+        }
+        
+        .light-blue { 
+            background: linear-gradient(135deg, #87CEEB 0%, #E0F6FF 100%); 
+            border-left: 5px solid #4682B4; 
+            color: #333;
+        }
+        
+        .yellow { 
+            background: linear-gradient(135deg, #FFD700 0%, #FFFACD 100%); 
+            border-left: 5px solid #FFB84D; 
+            color: #333;
+        }
+        
+        .medium-blue { 
+            background: linear-gradient(135deg, #4169E1 0%, #B0C4DE 100%); 
+            border-left: 5px solid #191970; 
+            color: white;
+        }
+        
+        .dark-blue { 
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%); 
+            border-left: 5px solid #1a252f; 
+            color: white;
+        }
+        
+        .executor { 
+            background: linear-gradient(135deg, #ADD8E6 0%, #E6F3FF 100%); 
+            border-left: 5px solid #5CB3FF; 
+            color: #333;
+        }
+        
+        .grey { 
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%); 
+            border: 2px dashed #999;
+            border-left: 5px solid #A9A9A9;
+            color: #333;
+        }
+        
+        /* Arrow animations */
+        .arrow {
+            stroke-dasharray: 5;
+            animation: dash 30s linear infinite;
+        }
+        
+        @keyframes dash {
+            to {
+                stroke-dashoffset: -1000;
+            }
+        }
+        
+        .section {
+            margin: 30px 0;
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .section h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .section p {
+            color: #5a6c7d;
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+        
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 1200px) {
+            .flow-container {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .slide {
+                padding: 30px 20px;
+            }
+            .title {
+                font-size: 2rem;
+            }
+            .subtitle {
+                font-size: 1rem;
+            }
+        }
+        
+        /* Legend */
+        .legend {
+            margin-top: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .legend h4 {
+            margin-bottom: 15px;
+            color: #2c3e50;
+            font-size: 1rem;
+        }
+        
+        .legend-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+        }
+        
+        .legend-box {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="slide">
+            <h1 class="title">Debbie Inc – Spend Intelligence System Flow</h1>
+            <p class="subtitle">Vendor-Agnostic Architecture</p>
+            
+            <div class="diagram-wrapper">
+                <div class="flow-container">
+                    <!-- Row 1: Data Sources -->
+                    <div class="flow-box orange">
+                        <div class="box-label">📊 Data Sources</div>
+                        <div class="box-description">Incoming transaction feeds (webhooks, batch files, historical backfills)</div>
+                    </div>
+                    
+                    <div class="flow-box light-blue">
+                        <div class="box-label">🔄 Ingest & Normalize</div>
+                        <div class="box-description">Deduplicate, validate, normalize categories, merchant names, signs</div>
+                    </div>
+                    
+                    <div class="flow-box yellow">
+                        <div class="box-label">🗄️ Transactions DB</div>
+                        <div class="box-description">Postgres – 'transactions' table<br>Stores normalized records</div>
+                    </div>
+                    
+                    <!-- Row 2: AI Components -->
+                    <div class="flow-box medium-blue">
+                        <div class="box-label">🤖 SQL Generator (LLM)</div>
+                        <div class="box-description">Converts natural language to safe SQL queries</div>
+                    </div>
+                    
+                    <div class="flow-box executor">
+                        <div class="box-label">⚙️ DB Executor</div>
+                        <div class="box-description">Runs SQL read-only and returns result rows</div>
+                    </div>
+                    
+                    <div class="flow-box medium-blue">
+                        <div class="box-label">🧠 Analyst (LLM)</div>
+                        <div class="box-description">Explains results conversationally, provides insights (no charts)</div>
+                    </div>
+                    
+                    <!-- Row 3: Output -->
+                    <div class="flow-box dark-blue">
+                        <div class="box-label">💬 Chat Interface</div>
+                        <div class="box-description" style="color: white;">User interactions, receives human explanations</div>
+                    </div>
+                    
+                    <!-- Memory as overlay on right -->
+                    <div class="flow-box grey" style="grid-column: span 2;">
+                        <div class="box-label">💭 Conversation Memory</div>
+                        <div class="box-description">Stores last SQL, result rows, and preferences to enable follow-ups</div>
+                    </div>
+                </div>
+                
+                <!-- Flow diagram explanation -->
+                <div style="margin-top: 40px; padding: 20px; background: rgba(102, 126, 234, 0.05); border-radius: 8px;">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                        <div>
+                            <h4 style="color: #2c3e50; margin-bottom: 10px; font-size: 1rem;">➡️ Data Flow</h4>
+                            <p style="font-size: 0.9rem; color: #5a6c7d; line-height: 1.6;">
+                                Data Sources → Ingest & Normalize → Transactions Database
+                            </p>
+                        </div>
+                        <div>
+                            <h4 style="color: #2c3e50; margin-bottom: 10px; font-size: 1rem;">🤖 AI Pipeline</h4>
+                            <p style="font-size: 0.9rem; color: #5a6c7d; line-height: 1.6;">
+                                SQL Generator → DB Executor → Analyst → Chat Interface
+                            </p>
+                        </div>
+                        <div>
+                            <h4 style="color: #2c3e50; margin-bottom: 10px; font-size: 1rem;">💭 Context Memory</h4>
+                            <p style="font-size: 0.9rem; color: #5a6c7d; line-height: 1.6;">
+                                Memory feeds context to SQL Generator & Analyst (dashed connections)
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>🎯 Key Architecture Principles</h3>
+                <p>
+                    <strong>Vendor-Agnostic:</strong> Works with any data source (Plaid, Stripe, manual uploads, etc.) through standardized normalization.
+                </p>
+                <p style="margin-top: 10px;">
+                    <strong>Read-Only Queries:</strong> All database interactions are read-only for data safety and integrity.
+                </p>
+                <p style="margin-top: 10px;">
+                    <strong>Conversational Context:</strong> Memory module enables natural follow-up questions like "analyze that" or "go deeper" by maintaining conversation state.
+                </p>
+            </div>
+            
+            <div class="footer">
+                Debbie Inc – Spend Intelligence Platform | Vendor-Agnostic Architecture
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
